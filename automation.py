@@ -521,7 +521,7 @@ class Ui_MainWindow(object):
                 self.result_message_label.setStyleSheet("color: red")
                 self.result_message_label.setVisible(True)
             else:
-                self.des_name = des_ext_text
+                self.des_ext = des_ext_text
                 self.result_message_label.setVisible(False)
 
         # Check starting number input
@@ -627,27 +627,30 @@ class Ui_MainWindow(object):
 
     # Final submit button
     def main_submit(self):
-        # Check radio buttons
-        if self.rename_all_radio.isChecked():
-            self.filter_ = ""
-        else:
-            self.filter_ = self.enter_startwith_label.text()
+        try:
+            # Check radio buttons
+            if self.rename_all_radio.isChecked():
+                self.filter_ = ""
+            else:
+                self.filter_ = self.enter_startwith_label.text()
 
-        # Check path
-        if self.path != "":
-            # Do automation process
-            out_text, color = rename_files(self.path, self.des_name, self.des_ext, self.selections_list, self.filter_,
-                                           self.start, self.seq)
-            self.result_message_label.setText(out_text)
-            self.result_message_label.setStyleSheet(f"color: {color}")
-            self.result_message_label.setVisible(True)
-            # Open folder
-            os.startfile(self.path)
+            # Check path
+            if self.path != "":
+                # Do automation process
+                out_text, color = rename_files(self.path, self.des_name, self.des_ext, self.selections_list, self.filter_,
+                                               self.start, self.seq)
+                self.result_message_label.setText(out_text)
+                self.result_message_label.setStyleSheet(f"color: {color}")
+                self.result_message_label.setVisible(True)
+                # Open folder
+                startfile(self.path)
 
-        else:
-            self.result_message_label.setText("Please select a folder..")
-            self.result_message_label.setStyleSheet(f"color: red")
-            self.result_message_label.setVisible(True)
+            else:
+                self.result_message_label.setText("Please select a folder..")
+                self.result_message_label.setStyleSheet(f"color: red")
+                self.result_message_label.setVisible(True)
+        except Exception as e:
+            print(e)
 
 
     # When all files radio button clicked
