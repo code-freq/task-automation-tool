@@ -18,7 +18,7 @@ The **Task Automation Tool** is a Python-based utility with a PyQt6 Designer int
    ```
 2. Install the required dependencies:
     ```bash
-   pip install tk pyqt6
+   pip install pyqt6
    ```
 
 ## Usage
