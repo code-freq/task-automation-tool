@@ -1,7 +1,7 @@
 # Task Automation Tool
 
 ## Overview
-The **Task Automation Tool** is a Python-based utility designed to simplify the process of renaming multiple files in a folder according to customizable formats. This tool supports sequential numbering, date-time stamping, custom file names, and extension changes, making it ideal for organizing large sets of files.
+The **Task Automation Tool** is a Python-based utility with a PyQt6 Designer interface, designed to simplify the process of renaming multiple files in a folder according to customizable formats. This tool supports sequential numbering, date-time stamping, custom file names, and extension changes, making it ideal for organizing large sets of files.
 
 ## Features
 - **Sequential File Renaming:** Rename files with sequential numbers and optional custom names, dates, and times.
@@ -16,19 +16,26 @@ The **Task Automation Tool** is a Python-based utility designed to simplify the 
     ```bash
    git clone https://github.com/code-freq/task-automation-tool.git
    ```
-2. Install the required dependencies (only `tkinter`):
+2. Install the required dependencies:
     ```bash
-   pip install tk
+   pip install tk pyqt6
    ```
 
 ## Usage
-1. Run the `main.py` script on your IDE.
-2. Follow the prompts to select a folder and configure renaming options.
+1. Open a terminal and navigate to the directory containing the `automation.py` script:
+    ```bash
+    cd path/to/your/directory
+    ```
+2. Run the `automation.py` script:
+    ```bash
+    python automation.py
+    ```
+3. Follow the prompts to select a folder and configure renaming options.
 
 ### Modes
 - **Sequential Mode:**
 
-    The user is prompted to define a format for the file names using the following keywords:
+    Define a format for file names using the following keywords:
     - `name`: Custom name for files.
     - `number`: Sequential numbering.
     - `date`: File creation date.
@@ -43,7 +50,7 @@ The **Task Automation Tool** is a Python-based utility designed to simplify the 
 
 - **Combinational Mode:**
 
-    In this mode, the user can provide a custom prefix, suffix, and extension to rename files, without altering the original name.
+    Provide a custom prefix, suffix, and extension to rename files, without altering the original name.
     
     Example:
     - Prefix: `Project`
@@ -54,40 +61,27 @@ The **Task Automation Tool** is a Python-based utility designed to simplify the 
 
 ### File Filters
 - **Rename All Files:**
+    
+    Rename all files in the selected folder.
 
-This option allows you to rename all files in the selected folder.
 
 - **Rename Files Starting with Specific Text:**
 
-Only files that begin with the text you can type will be renamed.
+  Rename only files that begin with specified text.
 
-## Example Outputs
-- **Sequential Renaming:**
-    ```
-    Original files:
-    - DSC_001.jpg
-    - DSC_002.jpg
-  
-    Renamed files (using name,number,date,time):
-    - NewName_1_10-11-2024_14-35-10.jpg
-    - NewName_2_10-11-2024_14-35-11.jpg
-    ```
-- **Combinational Renaming:**
-  ```
-  Original files:
-  - DSC_001.jpg
-  - DSC_002.jpg
-  
-  Renamed files (using prefix, suffix, and extension):
-  - Prefix_001_Suffix.NewExt
-  - Prefix_002_Suffix.NewExt
-  ```
+## Example Screenshots
+<img src="./assets/main.png" alt="Main Window" width="500"/>
+
+<img src="./assets/combinational.png" alt="Combinational" width="400"/> 
+
+<img src="./assets/sequential.png" alt="Sequential" width="400"/>
+
+<img src="./assets/filter_files.png" alt="Filter Files" width="400"/>
+
 
 > [!Note]
 > 
-> The tool provides user-friendly input validation to ensure the correctness of the file renaming process.
-> 
-> You can choose to skip changing file names or extensions, and the tool will keep them unchanged.
+> The tool was developed with a PyQt6 Designer interface, allowing for a more user-friendly experience.
 
 ## Contributing
 Feel free to fork the repository and submit pull requests with improvements or bug fixes.
