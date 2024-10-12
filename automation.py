@@ -13,6 +13,12 @@ class Ui_MainWindow(object):
         MainWindow.setWindowIcon(QtGui.QIcon('assets/code-freq.png'))
 
         # self variables
+        self.invalid_des_name = False
+        self.invalid_pre_name = False
+        self.invalid_ext_name = False
+        self.invalid_ext_name_2 = False
+        self.invalid_suf_name = False
+
         self.format_valid = False
         self.format_clicked = False
         self.selections_list = []
@@ -484,14 +490,39 @@ class Ui_MainWindow(object):
     def seq_submit_clicked(self):
         # Check checkboxes
         if self.change_name_checkbox.isChecked():
-            self.des_name = self.type_name_label.text()
+            des_name_text = self.type_name_label.text()
+            invalid_chars = ["#", "%", "&", "{", "}", "\\","<",">","*","?","/","$","!","'","\"",":","@","+",
+                             "`", "|", "="]
+            self.invalid_des_name = False
+            for i in des_name_text:
+                if i in invalid_chars:
+                    self.invalid_des_name = True
+            if self.invalid_des_name:
+                self.result_message_label.setText("Invalid character for a file name..")
+                self.result_message_label.setStyleSheet("color: red")
+                self.result_message_label.setVisible(True)
+            else:
+                self.des_name = des_name_text
+                self.result_message_label.setVisible(False)
+
         else:
             self.des_name = ""
 
         if self.change_ext__checkbox.isChecked():
-            self.des_ext = self.type_ext_label.text()
-        else:
-            self.des_ext = ""
+            des_ext_text = self.type_ext_label.text()
+            invalid_chars = ["#", "%", "&", "{", "}", "\\", "<", ">", "*", "?", "/", "$", "!", "'", "\"", ":", "@", "+",
+                             "`", "|", "="]
+            self.invalid_ext_name = False
+            for i in des_ext_text:
+                if i in invalid_chars:
+                    self.invalid_ext_name = True
+            if self.invalid_ext_name:
+                self.result_message_label.setText("Invalid character for an extension name..")
+                self.result_message_label.setStyleSheet("color: red")
+                self.result_message_label.setVisible(True)
+            else:
+                self.des_name = des_ext_text
+                self.result_message_label.setVisible(False)
 
         # Check starting number input
         try:
@@ -506,7 +537,7 @@ class Ui_MainWindow(object):
                 self.start = int_inp
 
                 # If everything is right
-                if self.format_valid:
+                if self.format_valid and not (self.invalid_des_name or self.invalid_ext_name):
                     set_layout_or_widget_visible(self.would_you_layout, True)
                     self.rename_all_radio.setChecked(True)
                     self.rename_specific_radio.setChecked(False)
@@ -521,6 +552,7 @@ class Ui_MainWindow(object):
 
                 else:
                     set_layout_or_widget_visible(self.would_you_layout, False)
+                    self.result_message_label.setVisible(True)
 
         except (ValueError, AttributeError):
             self.result_message_label.setText("Invalid starting number..")
@@ -532,25 +564,66 @@ class Ui_MainWindow(object):
     def comb_submit_clicked(self):
         # Check checkboxes
         if self.addprefix_checkBox.isChecked():
-            self.des_name = self.Add_prefix_label.text()
+            prefix_text = self.Add_prefix_label.text()
+            invalid_chars = ["#", "%", "&", "{", "}", "\\", "<", ">", "*", "?", "/", "$", "!", "'", "\"", ":", "@", "+",
+                             "`", "|", "="]
+            self.invalid_pre_name = False
+            for i in prefix_text:
+                if i in invalid_chars:
+                    self.invalid_pre_name = True
+            if self.invalid_pre_name:
+                self.result_message_label.setText("Invalid character for a file name..")
+                self.result_message_label.setStyleSheet("color: red")
+                set_layout_or_widget_visible(self.would_you_layout, False)
+                self.result_message_label.setVisible(True)
+            else:
+                self.des_name = prefix_text
+                self.result_message_label.setVisible(False)
+
         else:
             self.des_name = ""
 
         if self.addsuffix_checkBox.isChecked():
-            self.des_ext = self.add_suffix_label.text()
-        else:
-            self.des_ext = ""
+            suffix_text = self.add_suffix_label.text()
+            invalid_chars = ["#", "%", "&", "{", "}", "\\", "<", ">", "*", "?", "/", "$", "!", "'", "\"", ":", "@", "+",
+                             "`", "|", "="]
+            self.invalid_suf_name = False
+            for i in suffix_text:
+                if i in invalid_chars:
+                    self.invalid_suf_name = True
+            if self.invalid_suf_name:
+                self.result_message_label.setText("Invalid character for a file name..")
+                self.result_message_label.setStyleSheet("color: red")
+                self.result_message_label.setVisible(True)
+            else:
+                self.des_ext = suffix_text
+                self.result_message_label.setVisible(False)
 
         if self.change_ext_checkBox.isChecked():
-            self.selections_list = self.add_suffix_label_2.text()
-        else:
-            self.selections_list = ""
+            ext_text = self.add_suffix_label_2.text()
+            invalid_chars = ["#", "%", "&", "{", "}", "\\", "<", ">", "*", "?", "/", "$", "!", "'", "\"", ":", "@", "+",
+                             "`", "|", "="]
+            self.invalid_ext_name_2 = False
+            for i in ext_text:
+                if i in invalid_chars:
+                    self.invalid_ext_name_2 = True
+            if self.invalid_suf_name:
+                self.result_message_label.setText("Invalid character for an extension name..")
+                self.result_message_label.setStyleSheet("color: red")
+                self.result_message_label.setVisible(True)
+            else:
+                self.selections_list = ext_text
+                self.result_message_label.setVisible(False)
 
-        set_layout_or_widget_visible(self.would_you_layout, True)
-        self.rename_all_radio.setChecked(True)
-        self.rename_specific_radio.setChecked(False)
-        set_layout_or_widget_visible(self.enter_startwith_label, False)
-        self.seq = False
+        if not (self.invalid_suf_name or self.invalid_pre_name or self.invalid_ext_name_2):
+            set_layout_or_widget_visible(self.would_you_layout, True)
+            self.rename_all_radio.setChecked(True)
+            self.rename_specific_radio.setChecked(False)
+            set_layout_or_widget_visible(self.enter_startwith_label, False)
+            self.seq = False
+        else:
+            self.result_message_label.setVisible(True)
+
 
     # Final submit button
     def main_submit(self):

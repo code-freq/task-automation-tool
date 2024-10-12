@@ -1,5 +1,5 @@
 from os.path import getctime, join, splitext
-from os import listdir, rename
+from os import listdir, rename, startfile
 from tkinter import filedialog
 from datetime import datetime
 
